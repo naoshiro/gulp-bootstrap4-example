@@ -1,16 +1,36 @@
+include _config
+block params
+include _mixins
 doctype html
 html(lang='ja')
   head
     meta(charset='UTF-8')
-    block title
-      title Default Title
+    title= title + ' | ' + site_name
+    meta(name='description', content=description)
+    meta(name='keywords', content=keywords)
     meta(name='viewport', content='width=device-width, initial-scale=1, shrink-to-fit=no')
     meta(http-equiv='x-ua-compatible', content='ie=edge')
-    link(rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.4/css/bootstrap.min.css")
+    meta(name='mobile-web-app-capable', content='yes')
+    meta(name='og:title', content=title)
+    meta(name='og:type', content='website')
+    meta(name='og:description', content=description)
+    meta(name='og:url', content=page_url)
+    meta(name='og:image', content=ogimage)
+    meta(name='og:site_name', content=site_name)
+    meta(name='canonical', href=page_url)
+    meta(name='robots', content=robots)
+    link(rel='shortcut icon' href='./assets/img/favicon.ico')
+    link(rel='apple-touch-icon-precomposed', href='./assets/img/favicon57x57.png', sizes='57x57')
+    link(rel='apple-touch-icon-precomposed', href='./assets/img/favicon72x72.png', sizes='72x72')
+    link(rel='apple-touch-icon-precomposed', href='./assets/img/favicon114x114.png', sizes='114x114')
+    link(rel='apple-touch-icon-precomposed', href='./assets/img/favicon144x144.png', sizes='144x144')
     link(rel='stylesheet', href='./assets/css/style.css')
+    script(src='https://use.fontawesome.com/e9fd82e00f.js')
     include _shim
-  body
+  body.loading
+    include _fb-script
     include _header
     block content
     include _footer
     include _script
+    include _analytics
