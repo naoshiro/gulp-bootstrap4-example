@@ -26,7 +26,7 @@ const path = {
 // Copy
 // ---------------------------------------------
 gulp.task('copy', ()=> {
-  gulp.src(path.src + '/**/*.+(jpg|jpeg|png|gif|svg|ico)')
+  gulp.src(path.src + '/**/*.+(jpg|jpeg|png|gif|svg|ico|html)')
     .pipe(changed(path.dist))
     .pipe(gulp.dest(path.dist));
 });
@@ -127,6 +127,7 @@ gulp.task('build', ['jade', 'sass', 'js', 'copy']);
 gulp.task('dev', ['watchjs', 'browsersync'], ()=> {
   gulp.watch(path.src + '/**/*.jade', ['jade']);
   gulp.watch(path.src + '/**/*.scss', ['sass']);
+  gulp.watch(path.src + '/**/*.+(jpg|jpeg|png|gif|svg|ico|html)', ['copy']);
 
   var timer;
   gulp.watch(path.dist + '/**/*', ()=> {
