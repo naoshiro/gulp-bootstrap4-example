@@ -1,0 +1,12 @@
+.header {
+  @at-root {
+    &__logo {}
+    &__main-nav {
+      @at-root {
+        &__item {
+          @at-root &--active {}
+        }
+      }
+    }
+  }
+}

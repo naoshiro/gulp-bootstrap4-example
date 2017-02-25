@@ -1,0 +1,10 @@
+.footer {
+  @at-root {
+    &__copy {}
+    &__banner {
+      @at-root {
+        &__item {}
+      }
+    }
+  }
+}
