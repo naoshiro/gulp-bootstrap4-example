@@ -14,7 +14,7 @@ const watchify = require('watchify');
 const source = require('vinyl-source-stream');
 const babelify = require('babelify');
 const uglify = require('gulp-uglify');
-
+const fontAwesome = require('node-font-awesome');
 
 // Path
 // ---------------------------------------------
@@ -23,10 +23,17 @@ const path = {
   src: './src'
 }
 
+// Font
+// ---------------------------------------------
+gulp.task('fonts', function() {
+  gulp.src(fontAwesome.fonts)
+    .pipe(gulp.dest(path.dist + '/assets/fonts'));
+});
+
 // Copy
 // ---------------------------------------------
 gulp.task('copy', ()=> {
-  gulp.src(path.src + '/**/*.+(jpg|jpeg|png|gif|svg|ico|html)')
+  gulp.src(path.src + '/**/*.+(jpg|jpeg|png|gif|svg|ico)')
     .pipe(changed(path.dist))
     .pipe(gulp.dest(path.dist));
 });
@@ -36,7 +43,10 @@ gulp.task('copy', ()=> {
 gulp.task('sass', ()=> {
   gulp.src(path.src + '/**/*.scss')
     .pipe(sass({
-      includePaths: ['./node_modules/bootstrap/scss'],
+      includePaths: [
+        './node_modules/bootstrap/scss',
+        fontAwesome.scssPath
+      ],
       outputStyle: 'compressed'
     }).on('error', sass.logError))
     .pipe(autoprefixer({
@@ -122,12 +132,12 @@ gulp.task('uglify', () => {
 
 // task
 // ---------------------------------------------
-gulp.task('build', ['jade', 'sass', 'js', 'copy']);
+gulp.task('build', ['jade', 'sass', 'js', 'fonts', 'copy']);
 
 gulp.task('dev', ['watchjs', 'browsersync'], ()=> {
   gulp.watch(path.src + '/**/*.jade', ['jade']);
   gulp.watch(path.src + '/**/*.scss', ['sass']);
-  gulp.watch(path.src + '/**/*.+(jpg|jpeg|png|gif|svg|ico|html)', ['copy']);
+  gulp.watch(path.src + '/**/*.+(jpg|jpeg|png|gif|svg|ico)', ['copy']);
 
   var timer;
   gulp.watch(path.dist + '/**/*', ()=> {
